@@ -5,11 +5,11 @@ class UsersController {
   static async postNew(req, res) {
     if (!req.body.email) {
       res.status(400).send(
-        JSON.stringify({ error: 'Missing email' }),
+        { error: 'Missing email' },
       );
     } else if (!req.body.password) res.status(400).send({ error: 'Missing password' });
     else if (await dbClient.findUser({ email: req.body.email }) > 0) {
-      res.status(400).send(JSON.stringify({ error: 'Already exist' }));
+      res.status(400).send({ error: 'Already exist' });
     } else {
       const hash = crypto.createHash('sha1');
       const ob = {
