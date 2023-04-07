@@ -29,6 +29,11 @@ class DBClient {
     const db = this.client.db('files_manager');
     return db.collection('files').countDocuments();
   }
+
+  async insertUser(object) {
+    const db = this.client.db('files_manager');
+    return db.collection('users').insertOne(object);
+  }
 }
 
 const dbClient = new DBClient();
