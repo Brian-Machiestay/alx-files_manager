@@ -19,9 +19,7 @@ app.get('/stats', (req, res) => {
 });
 
 app.post('/users', (req, res) => {
-  UsersController.postNew(req).then((val) => {
-    res.send(JSON.stringify(val));
-  });
+  UsersController.postNew(req, res);
 });
 
 export default app;
