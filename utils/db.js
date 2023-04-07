@@ -39,6 +39,16 @@ class DBClient {
     const db = this.client.db('files_manager');
     return db.collection('users').countDocuments(object);
   }
+
+  async getUser(object) {
+    const db = this.client.db('files_manager');
+    return db.collection('users').findOne(object);
+  }
+
+  async delUser(object) {
+    const db = this.client.db('files_manager');
+    return db.collection('users').deleteOne(object);
+  }
 }
 
 const dbClient = new DBClient();
