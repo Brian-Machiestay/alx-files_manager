@@ -8,7 +8,8 @@ class RedisClient {
     this.alive = false;
     this.client.on('connect', () => {
       this.alive = true;
-    })
+    });
+    this.client.on('error', (err) => console.log(err));
   }
 
   isAlive() {
@@ -21,8 +22,9 @@ class RedisClient {
         if (err) reject(err);
         else resolve(val);
       });
-    })
-    return await val;
+    });
+    const actualVal = await val;
+    return actualVal;
   }
 
   async set(key, value, due) {
@@ -30,8 +32,8 @@ class RedisClient {
       this.client.set(key, value, (err, val) => {
         if (err) reject(err);
         else resolve(val);
-      })
-    })
+      });
+    });
     val = await val;
     await this.client.expire(key, due);
     return val;
