@@ -1,6 +1,5 @@
 import crypto from 'crypto';
 import { uuid } from 'uuidv4';
-import { ObjectId } from 'mongodb';
 import dbClient from '../utils/db';
 import redisClient from '../utils/redis';
 /* global atob */
@@ -34,14 +33,12 @@ class AuthController {
     const token = req.headers['x-token'];
     const key = `auth_${token}`;
     const getUserId = await redisClient.get(key);
-    const dbid = new ObjectId(getUserId);
     if (getUserId === null) {
       res.status(401).send({
         error: 'Unauthorized',
       });
     } else {
       await redisClient.del(key);
-      await dbClient.delUser({ _id: dbid });
       res.status(204).send();
     }
   }
