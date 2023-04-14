@@ -8,15 +8,11 @@ const app = express();
 app.use(express.json());
 
 app.get('/status', (req, res) => {
-  AppController.getStatus().then((val) => {
-    res.send(val);
-  });
+  AppController.getStatus(req, res);
 });
 
 app.get('/stats', (req, res) => {
-  AppController.getStats().then((val) => {
-    res.send(val);
-  });
+  AppController.getStats(req, res);
 });
 
 app.post('/users', (req, res) => {
