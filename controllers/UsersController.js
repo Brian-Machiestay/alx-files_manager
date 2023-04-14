@@ -19,7 +19,7 @@ class UsersController {
         password: hash.update(req.body.password).digest('hex'),
       };
       const { ops } = await dbClient.insertUser(ob);
-      res.send({
+      res.status(201).send({
         id: ops[0]._id,
         email: req.body.email,
       });
