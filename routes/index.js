@@ -34,4 +34,5 @@ app.get('/disconnect', (req, res) => {
 app.get('/users/me', (req, res) => {
   UsersController.getMe(req, res);
 });
+
 export default app;

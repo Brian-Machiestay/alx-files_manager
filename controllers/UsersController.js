@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { ObjectId } from 'mongodb';
 import dbClient from '../utils/db';
 import redisClient from '../utils/redis';
 
@@ -28,13 +29,14 @@ class UsersController {
   static async getMe(req, res) {
     const token = req.headers['x-token'];
     const key = `auth_${token}`;
-    const getUser = await redisClient.get(key);
-    if (getUser === null) {
+    const getUserId = await redisClient.get(key);
+    const dbid = new ObjectId(getUserId);
+    if (getUserId === null) {
       res.status(401).send({
         error: 'Unauthorized',
       });
     } else {
-      const val = await dbClient.getUser({ email: getUser });
+      const val = await dbClient.getUser({ _id: dbid });
       res.send({
         id: val._id,
         email: val.email,
